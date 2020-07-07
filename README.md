@@ -7,7 +7,7 @@ Con este documento se pretende explicar como aplicar un recyclerView usando el l
 
 ### Que es el recyclerView ?
 
-El RecyclerView es una vista especial la cual muestra el contenida de una lista de elementos, y se llama recycler como reciclaje porque la lista donde se muestran los elementos se reusan para no cargar mucha memoria de elementos gráficos asociados a cada elemento de la lista a mostrar.
+El RecyclerView es una vista especial la cual muestra el contenido de una lista de elementos, y se llama recycler como reciclaje porque la lista donde se muestran los elementos se reusan para no cargar mucha memoria de elementos gráficos asociados a cada elemento de la lista a mostrar.
 
 Toda lista tiene que ser definida a partir de una clase y en Kotlin la manera mas directa es con una clase data Class por ejemplo así:
 
@@ -225,7 +225,7 @@ Este es un layout que organiza los elementos gráficos que se cargarán en el re
 
 ![recycler_item.xml](./docs/imgs/item.jpg)
 
-Deberás poner todos los elemtos gráficos que te interese mostrar como textViews, ImageViews, etc estos los asociaras en el viewHolder por su nombre
+Deberás poner todos los elementos gráficos que te interese mostrar como textViews, ImageViews, etc estos los asociarás en el viewHolder por su nombre
 
         <?xml version="1.0" encoding="utf-8"?>
         <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -257,7 +257,7 @@ También definimos que los items tienen un contenido nuevo, y por tanto habrá q
 
 Creamos una clase Event.kt la cual nos definirá cuales eventos generados en el adapter tendremos que manejar en nuestro fragmento.
 
-Es denotar que en nuestro ejemplo estamos generando un evento OnImgToUpdate, la cual indica que no tenemos una imagen lista del item que hay que cargar, este evento lo cargaremos a una cola de un Flow de Kotlin, que no mostraremos ahora, pero se podrá generar facilmente de acuerdo a lo visto en la siguiente documentación: [callbackflow](https://github.com/Javierenrique00/callbackflow) y una vez esté cargado de la WEB o de la baseDeDatos o almacenamiento interno y está en RAM nos generará un cambio de la lista de que un item Ha cambiado invocándolo con un XXXX
+Es de notar que en nuestro ejemplo estamos generando un evento OnImgToUpdate, la cual indica que no tenemos una imagen lista del item que hay que cargar, este evento lo cargaremos a una cola de un Flow de Kotlin, que no mostraremos ahora, pero se podrá generar facilmente de acuerdo a lo visto en la siguiente documentación: [callbackflow](https://github.com/Javierenrique00/callbackflow) y una vez esté cargado de la WEB o de la baseDeDatos o almacenamiento interno y está en RAM nos generará un cambio de la lista de que un item ha cambiado invocándolo con un adapter.notifyItemChanged(it.position,it.item)
 
 También observamos los eventos OnStartDrag y OnMoveItem los cuales se dispararán en itemToucherHelper.kt
 
@@ -332,4 +332,10 @@ Aquí definimos el TouchCallBack asociada al adapter y es la clase que nos permi
 
             ItemTouchHelper(simpleItemTouchCallback)
         }
+
+## Conclusion
+
+Observamos que el recyclerView es una vista compleja porque involucra muchos elementos, y por tanto deberemos tener claro que para empezar a trabajar con el recyclerView tendremos que hacer muchas pruebas, dado que tendremos que familiarizarnos con las capacidades que tiene. Es importante manejar las fuentes de datos, los viewModel, eventos, liveData, etc.
+
+En este caso nuestra fuente de datos permite definir un orden diferente al orden del Id generado en la base de datos y este orden lo llamé ordenId, el cual cuando se hace un despliegue de la lista lo hará de acuerdo al orderId. también tengo un campo que me define si el campo está seleccionado, y si tiene o no definida la imagen cargada, la cual normalmente la cargo a un cache cuando está lista se notifica al adapter que la imagen está lista.
 
